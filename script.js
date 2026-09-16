@@ -200,6 +200,10 @@ function drawGraph(r) {
         ctx.fillText(label, x - 8, centerY + 20);
         ctx.fillText(label, centerX + 10, y + 5);
     });
+
+    state.history.forEach(record => {
+        drawPoint(record.x, record.y, record.hit);
+    });
 }
 function drawPoint(x, y, hit) {
     const { ctx, screenX, screenY } = getGraphData();
@@ -241,7 +245,14 @@ form.addEventListener('submit', event => {
     saveHistory(state.history);
     renderHistory(state.history);
     drawGraph(r);
-    drawPoint(x, y, hit);
+});
+
+const clearHistoryButton = document.querySelector('#clear-history');
+clearHistoryButton.addEventListener('click', () => {
+    localStorage.removeItem(STORAGE_KEY);
+    state.history = [];
+    renderHistory();
+    drawGraph(state.r ?? 1);
 });
 
 const buttons = document.querySelectorAll(".choice-button");
