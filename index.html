@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лаба №1, вар. 22712</title>
+
+    <script src="script.js" defer></script>
+
+    <style>
+        body {
+            color: #222;
+            font-family: Arial, sans-serif;
+        }
+
+        #main-table {
+            width: 90vw;
+            margin: 0 auto;
+        }
+
+        #lab-info {
+            color: #1f4f7a;
+            font-family: serif;
+            font-size: 20px;
+        }
+
+        td {
+            text-align: center;
+        }
+
+        #draw-area {
+            border: 2px solid green;
+            border-radius: 10px;
+            margin: 20px auto;
+            height: auto;
+            width: min(500px, 90%);
+        }
+
+        #point-form {
+            width: min(500px, 90%);
+            margin: 0 auto;
+
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .controls>button {
+            margin: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #dcecff;
+        }
+
+        input {
+            margin: 4px;
+            padding: 6px;
+        }
+
+        input:focus {
+            outline: 2px solid #4b86b4;
+        }
+
+        .required::after {
+            color: #c00;
+            content: " *";
+        }
+
+        .result-table {
+            margin: 0 auto;
+            width: min(600px, 90%);
+            border-collapse: collapse;
+        }
+
+        .result-table td,
+        .result-table th {
+            border: 1px solid black;
+            padding: 6px;
+        }
+
+        #content-table {
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        .choice-button.active {
+            color: white;
+            background-color: #4b86b4;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <table id="main-table">
+            <tr id="lab-info">
+                <td>
+                    Гембицкий Кирилл Дмитриевич
+                </td>
+                <td>
+                    Группа P3130
+                </td>
+                <td>
+                    Вариант 22712
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="3">
+                    <table id="content-table">
+                        <tr>
+                            <td>
+                                <canvas id="draw-area" width="500" height="500"></canvas>
+                                <form id="point-form">
+                                    <fieldset>
+                                        <legend>X</legend>
+                                        <div class="controls" id="x-controls">
+                                            <button type="button" class="choice-button" data-field="x"
+                                                data-value="-3">-3</button>
+                                            <button type="button" class="choice-button" data-field="x"
+                                                data-value="-2">-2</button>
+                                            <button type="button" class="choice-button" data-field="x"
+                                                data-value="-1">-1</button>
+                                            <button type="button" class="choice-button" data-field="x"
+                                                data-value="0">0</button>
+                                            <button type="button" class="choice-button" data-field="x"
+                                                data-value="1">1</button>
+                                            <button type="button" class="choice-button" data-field="x"
+                                                data-value="2">2</button>
+                                            <button type="button" class="choice-button" data-field="x"
+                                                data-value="3">3</button>
+                                            <button type="button" class="choice-button" data-field="x"
+                                                data-value="4">4</button>
+                                            <button type="button" class="choice-button" data-field="x"
+                                                data-value="5">5</button>
+                                        </div>
+                                    </fieldset>
+
+                                    <div>
+                                        <label class="required" for="y_input">Y</label>
+                                        <input type="text" id="y_input" name="y">
+                                    </div>
+
+                                    <fieldset>
+                                        <legend>R</legend>
+                                        <div class="controls" id="r-controls">
+                                            <button type="button" class="choice-button" data-field="r"
+                                                data-value="1">1</button>
+                                            <button type="button" class="choice-button" data-field="r"
+                                                data-value="2">2</button>
+                                            <button type="button" class="choice-button" data-field="r"
+                                                data-value="3">3</button>
+                                            <button type="button" class="choice-button" data-field="r"
+                                                data-value="4">4</button>
+                                            <button type="button" class="choice-button" data-field="r"
+                                                data-value="5">5</button>
+                                        </div>
+                                    </fieldset>
+
+                                    <button type="submit">Проверить</button>
+                                </form>
+                                <div id="error-message"></div>
+                            </td>
+
+                            <td>
+                                <span>Попытки</span>
+                                <table id="points-table" class="result-table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">X</th>
+                                            <th scope="col">Y</th>
+                                            <th scope="col">R</th>
+                                            <th scope="col">Попадание</th>
+                                            <th scope="col">Дата</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="result-body"></tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </main>
+</body>
+
+</html>
