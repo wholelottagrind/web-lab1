@@ -36,24 +36,28 @@ function parseY(rawValue) {
     return { ok: true, value: value };
 }
 
-function checkPointHit(x, y, r) {
-    const inTriangle =
-        x <= 0 &&
-        y >= 0 &&
-        y <= x + r;
+function checkPointHit(x) {
+    return function (y) {
+        return function (r) {
+            const inTriangle =
+                x <= 0 &&
+                y >= 0 &&
+                y <= x + r;
 
-    const inQuarterCircle =
-        x >= 0 &&
-        y >= 0 &&
-        x * x + y * y <= r * r;
+            const inQuarterCircle =
+                x >= 0 &&
+                y >= 0 &&
+                x * x + y * y <= r * r;
 
-    const inRectangle =
-        x >= -r / 2 &&
-        x <= 0 &&
-        y >= -r &&
-        y <= 0;
+            const inRectangle =
+                x >= -r / 2 &&
+                x <= 0 &&
+                y >= -r &&
+                y <= 0;
 
-    return inTriangle || inQuarterCircle || inRectangle;
+            return inTriangle || inQuarterCircle || inRectangle;
+        }
+    }
 }
 
 function saveHistory(history) {
@@ -242,7 +246,10 @@ form.addEventListener('submit', event => {
     errorDiv.textContent = '';
 
     const { x, y, r } = validationResult.value;
-    const hit = checkPointHit(x, y, r);
+    const hit = checkPointHit(x)(y)(r);
+    if (typeof hit !== 'boolean') {
+        throw new TypeError('checkPointHit must return boolean');
+    }
     const result = {
         x, y, r, hit, checkedAt: Date.now()
     };
