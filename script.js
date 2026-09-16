@@ -57,7 +57,13 @@ function checkPointHit(x, y, r) {
 }
 
 function saveHistory(history) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+        return true;
+    } catch (error) {
+        console.error('Ошибка сохранения истории в local storage:', error);
+        return false;
+    }
 }
 
 function loadHistory() {
@@ -242,7 +248,11 @@ form.addEventListener('submit', event => {
     };
 
     state.history.push(result);
-    saveHistory(state.history);
+    if (!saveHistory(state.history)) {
+        state.history.pop();
+        errorDiv.textContent = 'Не удалось сохранить результат в local storage.';
+        return;
+    }
     renderHistory(state.history);
     drawGraph(r);
 });
